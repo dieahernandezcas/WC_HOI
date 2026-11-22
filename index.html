@@ -68,6 +68,7 @@
   .narrow img{max-width:760px;margin:0 auto}
   .slim img{max-width:720px;margin:0 auto}
   .medium img{max-width:820px;margin:0 auto}
+  .tall img{max-width:480px;margin:0 auto}
 
   .coupling-grid{display:grid;grid-template-columns:120px 1fr 1fr;gap:12px;align-items:stretch;margin-top:8px}
   @media(max-width:700px){.coupling-grid{grid-template-columns:1fr}}
@@ -336,11 +337,11 @@
 
   <details>
     <summary>Supplementary figures</summary>
-    <figure>
+    <figure class="medium">
       <img src="results/figures/zf_combined_results_row.png" alt="Zebrafish models with row normalisation">
       <figcaption><b>Figure S1.</b> Zebrafish recordings and models with row normalisation of the connectome: diffusive models fit the functional connectivity less well and become far more redundant than the data.</figcaption>
     </figure>
-    <figure class="narrow">
+    <figure class="tall">
       <img src="results/figures/supplementary_wc_aK_combined.png" alt="Synthetic networks across gain and coupling">
       <figcaption><b>Figure S2.</b> Synthetic networks across response gain and coupling strength (drive fixed at 0.25).</figcaption>
     </figure>
