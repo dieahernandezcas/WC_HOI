@@ -1,0 +1,21 @@
+{
+  "data": 0.011798723639037223,
+  "undirected__linear": -0.0010920374815053249,
+  "directed__linear": -0.0015358573592292313,
+  "undirected__global__pairwise-additive__at-additive-optimum": 0.000718234664622951,
+  "undirected__global__pairwise-diffusive__at-diffusive-optimum": 0.06079811878271794,
+  "undirected__global__pairwise+fan-additive__at-additive-optimum": 0.002954178402648444,
+  "undirected__global__pairwise+fan-diffusive__at-diffusive-optimum": 0.009549284362155186,
+  "undirected__row__pairwise-additive__at-additive-optimum": 0.002785160154216558,
+  "undirected__row__pairwise-diffusive__at-diffusive-optimum": 0.17293546127041243,
+  "undirected__row__pairwise+fan-additive__at-additive-optimum": 0.0007680020858951513,
+  "undirected__row__pairwise+fan-diffusive__at-diffusive-optimum": 0.21080169233165613,
+  "directed__global__pairwise-additive__at-additive-optimum": 0.00020565655607066827,
+  "directed__global__pairwise-diffusive__at-diffusive-optimum": 0.0021532922816928464,
+  "directed__global__pairwise+fan-additive__at-additive-optimum": 0.0011120275265050035,
+  "directed__global__pairwise+fan-diffusive__at-diffusive-optimum": 0.03488250064967728,
+  "directed__row__pairwise-additive__at-additive-optimum": 0.0020236891334451225,
+  "directed__row__pairwise-diffusive__at-diffusive-optimum": 0.0077680169141181015,
+  "directed__row__pairwise+fan-additive__at-additive-optimum": 0.0024721079431888624,
+  "directed__row__pairwise+fan-diffusive__at-diffusive-optimum": 0.02867937914456016
+}

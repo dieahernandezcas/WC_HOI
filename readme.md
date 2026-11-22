@@ -1,278 +1,124 @@
-# Higher-Order Statistical Structure from Nonlinear Dynamics
+# Coupling functions and higher-order interactions
 
-[![Status](https://img.shields.io/badge/Status-In%20Development-yellow)]()
-[![License](https://img.shields.io/badge/License-MIT-blue)]()
-[![Python](https://img.shields.io/badge/Python-3.9%2B-informational)]()
+Simulation and analysis code for a study of how the coupling function of a
+network model (additive or diffusive; pairwise or third-order) shapes the
+higher-order statistical dependencies of its activity, measured with the
+O-information, and how such models compare with whole-brain calcium
+recordings of larval zebrafish.
 
-> **Hernández, D., Zamora-López, G., Laureys, S., Hindriks, R., Gomez, F., & Tewarie, P.K.B.**
-> *"Higher-order statistical structure emerges from nonlinear dynamics without explicit higher-order coupling."*
-> (2025, preprint)
+A single Wilson–Cowan network model is used throughout. Synthetic networks
+and the zebrafish connectome differ only in their adjacency matrix.
 
----
-
-## Overview
-
-This repository contains the full simulation code for a minimal three-node
-Wilson–Cowan network study that asks a fundamental question in computational
-neuroscience and complex-systems theory:
-
-> **Do higher-order statistical dependencies in neural signals require
-> explicit higher-order synaptic interactions, or can they emerge generically
-> from nonlinear second-order dynamics?**
-
-We compare four coupling architectures — two second-order (additive and diffusive)
-and two explicit third-order (additive and diffusive) — and quantify
-higher-order statistical structure using **Total Correlation minus Dual Total
-Correlation (TC − DTC)** and **third-order cumulants (κ₁₂₃)**. We vary
-three control parameters: external drive *P*, coupling strength *K*, and the
-sigmoid slope *a_E* (local nonlinear gain).
-
-### Main finding
-
-In the oscillatory (post-Hopf) regime, the second-order additive model produces
-TC − DTC values that are on average **16-fold** above the fixed-point
-baseline, reaching magnitudes comparable to the explicit third-order model.
-Increasing *a_E* amplifies TC − DTC up to **28-fold**, independently of
-coupling order. This confirms that **proximity to a Hopf bifurcation and
-local nonlinear gain — not coupling architecture — are the primary drivers of
-higher-order statistical structure**.
-
----
-
-## Repository Structure
+## Layout
 
 ```
-Criticality_HOI/
-├── Scripts/                          # Python source modules (importable package)
-│   ├── __init__.py
-│   ├── parameters.py                 # Heterogeneous per-node parameter sets
-│   ├── parameters_random.py          # Homogeneous global parameters & sweep grids
-│   ├── dynamics.py                   # Wilson–Cowan RHS for all 4 coupling types
-│   ├── simulation.py                 # RK4 integrator + stochastic wrappers
-│   ├── metrics.py                    # TC, DTC, cumulants, skewness, kurtosis
-│   ├── oscillation_detection.py      # Poincaré-section limit-cycle detector
-│   └── visualization.py              # Matplotlib + Plotly plotting utilities
-│
-├── Notebook/                         # Jupyter notebooks for all experiments
-│   ├── W_C_2nd_Order.ipynb            # Second-order additive: (P, K) sweep
-│   ├── W_C_2nd_Order_Diffusive.ipynb  # Second-order diffusive: (P, K) sweep
-│   ├── W_C_3rd_Order.ipynb            # Third-order additive: (P, K) sweep
-│   ├── W_C_3rd_Order_Diffusive.ipynb  # Third-order diffusive: (P, K) sweep
-│   ├── W_C_2nd_Order_Lines.ipynb      # Second-order additive: metric curves vs K
-│   ├── W_C_2nd_Order_Diffusive_Lines.ipynb
-│   ├── W_C_3rd_Order_Lines.ipynb
-│   ├── W_C_3rd_Order_Diffusive_Lines.ipynb
-│   ├── W_C_2nd_Order_a+k.ipynb        # Second-order additive: a_E–K sweep
-│   ├── W_C_3rd_Order_a+k.ipynb        # Third-order additive: a_E–K sweep
-│   ├── Results_comparisons.ipynb     # Load saved results, generate paper figures
-│   └── Test.ipynb                    # Quick exploration / sanity checks
-│
-├── results/                          # Pre-computed metric arrays and paper figures
-│   ├── metrics_Pairwise_noise.npz
-│   ├── metrics_Pairwise_diffusive_noise.npz
-│   ├── metrics_Coupling_noise.npz
-│   ├── metrics_Coupling_diffusive_noise.npz
-│   ├── metrics_Pairwise_noise_a.npz
-│   ├── metrics_Coupling_noise_a.npz
-│   ├── fig1_PK_additive.pdf
-│   ├── fig2_PK_diffusive.pdf
-│   ├── fig3_aK_additive.pdf
-│   └── paper_stats.json
-│
-├── data/                             # Simulation inputs
-│   ├── patients/
-│   └── patients_criticality/
-│
-├── Images/                           # Reference images
-├── archive/                          # Legacy notebooks and scripts (not maintained)
-│   ├── Notebooks_BackUps/
-│   ├── Notebooks_BackUps_2/
-│   └── Scripts_BackUps/
-│
-├── requirements.txt                  # Python dependencies
-├── .gitignore
-└── README.md
+coupling_hoi_study/
+├── configs/                  experiment descriptions (JSON); every parameter lives here
+├── data/raw/zebrafish/       recordings and connectome (not tracked; see Data)
+├── src/coupling_hoi/         library
+│   ├── config.py             parameter dataclasses, seeds
+│   ├── networks.py           synthetic networks, connectome normalisation
+│   ├── coupling.py           additive/diffusive, pairwise/fan coupling inputs
+│   ├── model.py              Wilson–Cowan network model (batched Euler–Maruyama)
+│   ├── information.py        O-information (nearest-neighbour and Gaussian-copula estimators)
+│   ├── preprocessing.py      filtering, detrending, z-scoring
+│   ├── surrogates.py         covariance-preserving and phase-randomised surrogates
+│   ├── metrics.py            functional connectivity and summaries
+│   ├── data.py               zebrafish loading, region selection, triplet sampling
+│   └── experiment.py         grids of simulations and per-run summaries
+├── scripts/                  numbered entry points (run in order)
+├── tests/                    unit tests
+└── results/                  generated outputs (figures, arrays, logs)
 ```
-
----
-
-## Model Description
-
-### Wilson–Cowan Network
-
-We study a minimal network of **N = 3** coupled Wilson–Cowan nodes with
-all-to-all connectivity. Each node *i* contains an excitatory variable
-*Eᵢ(t)* and an inhibitory variable *Iᵢ(t)*.
-
-**Inhibitory population (all architectures):**
-
-$$\tau_I^{(i)} \dot{I}_i = -I_i + S\!\left(c_{IE}^{(i)} E_i - c_{II}^{(i)} I_i + Q^{(i)}\right)$$
-
-**Excitatory population — four coupling architectures:**
-
-| Architecture | Label | Coupling term |
-|---|---|---|
-| Second-order additive | PA | K Σⱼ Mᵢⱼ Eⱼ |
-| Second-order diffusive | PD | K Σⱼ Mᵢⱼ (Eⱼ − Eᵢ) |
-| Third-order additive | TA | K₃ Σⱼₖ Tᵢⱼₖ Eⱼ Eₖ |
-| Third-order diffusive | TD | K₃ Σⱼₖ Tᵢⱼₖ (Eⱼ−Eᵢ)(Eₖ−Eᵢ) |
-
-The logistic sigmoid transfer function is S(x; a) = 1 / (1 + exp(−ax)).
-
-### Higher-Order Statistical Measures
-
-- **TC (Total Correlation):** measures the total redundancy across all nodes.
-- **DTC (Dual Total Correlation):** measures the total synergy.
-- **TC − DTC (O-information):** positive → net redundancy; negative → net synergy.
-- **κ₁₂₃ (Third-order cumulant):** normalized co-skewness of the joint excitatory activity.
-
-All measures are computed under a Gaussian approximation using the empirical
-covariance matrix of the post-transient excitatory time series.
-
-### Stochastic Integration
-
-The network is integrated with a 4th-order Runge–Kutta (RK4) scheme. Small
-additive Gaussian noise (σ_E = 0.01, Euler–Maruyama) is applied to the
-excitatory population to compute the covariance matrix at each (P, K) point.
-
----
 
 ## Installation
 
-### 1. Clone the repository
+```bash
+python -m venv .venv && source .venv/bin/activate
+pip install -e ".[test]"
+python -m pytest            # all tests should pass
+```
+
+Python ≥ 3.10, NumPy, SciPy and Matplotlib are required.
+
+## Reproducing the results
 
 ```bash
-git clone https://github.com/<your-username>/Criticality_HOI.git
-cd Criticality_HOI
+python scripts/01_analyse_zebrafish_data.py               # O-information of recordings and surrogates
+python scripts/02_explore_dynamical_regimes.py            # exploratory regime maps
+python scripts/03_plot_regimes.py                         # exploratory regime figures
+python scripts/04_run_main_experiment.py --part synthetic_drive  --workers 4
+python scripts/04_run_main_experiment.py --part synthetic_gain   --workers 4
+python scripts/04_run_main_experiment.py --part zebrafish_scan   --workers 4
+python scripts/04_run_main_experiment.py --part zebrafish_select
+python scripts/04_run_main_experiment.py --part zebrafish_final  --workers 4
+python scripts/06_zebrafish_null_correction.py            # circular-shift null for data and models
+python scripts/05_figure_synthetic_sweeps.py              # sweep figures
+python scripts/07_figure_zebrafish.py                     # zebrafish figure (global and row)
+python scripts/08_figure_methodology.py                   # overview figure
 ```
 
-### 2. Create a virtual environment (recommended)
+Every output of a script is written under `results/`; figure scripts only
+read those files. Per-run summaries (triplet O-information, functional
+connectivity, activity statistics, noise seed) are stored for every
+simulation; raw signals are stored for the final zebrafish simulations, and
+any other run can be regenerated exactly from its seed.
 
-```bash
-python -m venv venv
-source venv/bin/activate        # macOS / Linux
-# venv\Scripts\activate         # Windows
+Scripts skip outputs that already exist, so an interrupted run can be resumed
+by calling the same command again.
+
+## Model
+
+Each node has an excitatory (E) and an inhibitory (I) population,
+
+```
+tau_E dE_i = [-E_i + (1 - E_i) S(u_i^E)] dt + sigma dW_i
+tau_I dI_i = [-I_i + (1 - I_i) S(u_i^I)] dt + sigma dW'_i
+u_i^E = c_EE E_i - c_EI I_i + P + K G_i(E)
+u_i^I = c_IE E_i - c_II I_i     + K G_i(I)
+S(u)  = beta tanh(u + gamma u^2) for u > 0, 0 otherwise
 ```
 
-### 3. Install dependencies
+`G` is one of four coupling inputs (`coupling.py`):
 
-```bash
-pip install -r requirements.txt
-```
+| | additive | diffusive |
+|---|---|---|
+| pairwise | `sum_j A_ij x_j` | `sum_j A_ij (x_j - x_i)` |
+| fan (third order) | `sum_{j≠k} A_ij A_ik x_j x_k` | `sum_{j≠k} A_ij A_ik (x_j - x_i)(x_k - x_i)` |
 
----
+Connectomes are rescaled either globally (mean in-strength 1, preserving
+differences between nodes) or per row (every node has in-strength 1).
 
-## Usage
+## Design choices that matter for reproducibility
 
-### Reproducing paper results
+* **Paired noise.** The noise seed of a simulation depends on network,
+  normalisation, coupling order, drive, coupling strength and replicate, but
+  not on the coupling form. Additive and diffusive runs of the same condition
+  therefore share their noise.
+* **Batch independence.** Each simulation owns its random generator, so results
+  do not depend on how simulations are grouped into batches (tested).
+* **Identical preprocessing.** Recorded and simulated signals pass through the
+  same filter, detrending and z-scoring before any statistic is computed.
+* **Estimator consistency.** Nearest-neighbour distances use the maximum norm,
+  matching the `d log 2` volume term. The estimator is not invariant to
+  rescaling individual variables, so signals are always z-scored first
+  (tested).
+* **Fixed triplets.** The 300 zebrafish triplets are drawn once with a fixed
+  seed and shared by data, surrogates and models.
+* **Matched null.** The nearest-neighbour estimator is biased by the marginal
+  distribution and autocorrelation of the signals. Recordings and simulations
+  are therefore compared with their own circular-shift surrogates, which keep
+  both and destroy only the relations between regions.
+* **Operating points.** Zebrafish models are placed at the drive and coupling
+  that best reproduce the empirical functional connectivity; the O-information
+  is never used for this choice.
+* **Validation.** `01_analyse_zebrafish_data.py --check-against DIR` recomputes
+  the recorded O-information and compares it with a stored reference.
 
-All experiments are self-contained Jupyter notebooks. The recommended order
-for reproducing the paper figures is:
+## Data
 
-| Step | Notebook | Output file |
-|------|----------|-------------|
-| 1 | `W_C_2nd_Order.ipynb` | `results/metrics_Pairwise_noise.npz` |
-| 2 | `W_C_2nd_Order_Diffusive.ipynb` | `results/metrics_Pairwise_diffusive_noise.npz` |
-| 3 | `W_C_3rd_Order.ipynb` | `results/metrics_Coupling_noise.npz` |
-| 4 | `W_C_3rd_Order_Diffusive.ipynb` | `results/metrics_Coupling_diffusive_noise.npz` |
-| 5 | `W_C_2nd_Order_a+k.ipynb` | `results/metrics_Pairwise_noise_a.npz` |
-| 6 | `W_C_3rd_Order_a+k.ipynb` | `results/metrics_Coupling_noise_a.npz` |
-| 7 | `Results_comparisons.ipynb` | `results/fig1_PK_additive.pdf`, etc. |
-
-> **Note:** Pre-computed `.npz` files are already included in `results/`,
-> so you can jump directly to step 7 to reproduce the figures without
-> re-running the full parameter sweeps.
-
-### Quick start (single simulation)
-
-```python
-import sys
-sys.path.append('path/to/Criticality_HOI/')  # add repo root to path
-
-from Scripts.parameters_random import *
-from Scripts.simulation import simulate_wc_stochastic
-from Scripts.metrics import TC_gauss, DTC_gauss
-
-import numpy as np
-
-# Initial condition
-state0 = 0.1 * np.random.randn(2 * N_nodes)
-
-# Run stochastic simulation (second-order additive, P=5, K=0.4)
-t, states = simulate_wc_stochastic(state0, P=5.0, K=0.4, M=M, T=20, dt=dt)
-
-# Discard 2 s transient, extract excitatory time series
-E = states[int(2.0 / dt):, :N_nodes]
-
-# Compute TC and DTC under Gaussian approximation
-Sigma = np.cov(E.T)
-tc  = TC_gauss(Sigma)
-dtc = DTC_gauss(Sigma)
-print(f"TC = {tc:.4f} | DTC = {dtc:.4f} | TC−DTC = {tc - dtc:.4f} nats")
-```
-
----
-
-## Parameter Space
-
-The phase diagrams cover the following grids:
-
-| Parameter | Range | Steps | Description |
-|-----------|-------|-------|-------------|
-| External drive P | 1.0 → 10.0 | 20 | Controls proximity to Hopf bifurcation |
-| Coupling strength K | 0.0 → 1.0 | 20 | Second-order inter-node coupling |
-| Coupling strength K₃ | 0.0 → 1.0 | 20 | Third-order inter-node coupling |
-| Sigmoid slope a_E | 0.5 → 3.0 | 20 | Local nonlinear gain |
-
-Each grid point: T = 10 s, dt = 10⁻³ s, σ_E = 0.01, 2 s transient discarded.
-
----
-
-## Dependencies
-
-| Library | Purpose |
-|---------|---------|
-| `numpy` | Numerical arrays and linear algebra |
-| `scipy` | Covariance estimation, interpolation |
-| `matplotlib` | Static figures |
-| `plotly` | Interactive contour and line plots |
-| `kaleido` | Plotly static image export |
-| `jupyter` | Notebook environment |
-
----
-
-## Authors
-
-| Name | Affiliation |
-|------|-------------|
-| **Diego Hernández** | CERVO Brain Research Center, Université Laval, Canada; Dept. of Systems and Computing Engineering, Universidad Nacional de Colombia, Colombia |
-| **Gorka Zamora-López** | Dept. of Complex Systems, Institute of Computer Science, Czech Academy of Sciences, Czech Republic |
-| **Steven Laureys** | CERVO Brain Research Center, Université Laval, Canada; Coma Science Group, GIGA-Consciousness, Université de Liège, Belgium |
-| **Rikkert Hindriks** | Dept. of Mathematics, VU University, Amsterdam, Netherlands |
-| **Francisco Gomez** | Dept. of Mathematics, Universidad Nacional de Colombia, Colombia; CERVO Brain Research Center, Université Laval, Canada |
-| **Prejaas K.B. Tewarie** | CERVO Brain Research Center, Université Laval, Canada; Sir Peter Mansfield Imaging Centre, University of Nottingham, United Kingdom |
-
----
-
-## Contact
-
-- **Diego Hernández** — dieahernandezcas@unal.edu.co
-- **Prejaas K.B. Tewarie** — Prejaas.KBTewarie@cervo.ulaval.ca
-
----
-
-## License
-
-Released under the **MIT License**. See `LICENSE` for details.
-
----
-
-## References
-
-1. Wilson, H.R. & Cowan, J.D. (1972). Excitatory and inhibitory interactions in localized populations of model neurons. *Biophysical Journal*, 12(1), 1–24.
-2. Battiston, F. et al. (2021). The physics of higher-order interactions in complex systems. *Nature Physics*, 17, 1093–1098.
-3. Bick, C. et al. (2023). What are higher-order networks? *SIAM Review*, 65(3), 686–731.
-4. Hindriks, R. et al. (2024). Higher-order functional connectivity analysis of resting-state fMRI using multivariate cumulants. *Human Brain Mapping*, 45(5), e26663.
-5. Varley, T.F. et al. (2023). Partial entropy decomposition reveals higher-order information structures in human brain activity. *PNAS*, 120(30), e2300888120.
-6. Stramaglia, S. et al. (2021). Quantifying dynamical high-order interdependencies from the O-information. *Physical Review Research*, 3, 033090.
-7. Rosas, F.E. et al. (2022). Disentangling high-order mechanisms and high-order behaviours in complex systems. *Nature Physics*, 18, 476–477.
+The zebrafish recordings (36 larvae, 130 regions, 570 samples at 1 Hz) and
+the structural connectome are shared under a data-sharing agreement and are
+not distributed with this code. Place the files listed in
+`data/raw/zebrafish/SHA256SUMS` in that folder and verify them with
+`sha256sum -c SHA256SUMS`.

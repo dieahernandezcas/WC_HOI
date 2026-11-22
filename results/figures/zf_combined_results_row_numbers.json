@@ -1,0 +1,108 @@
+{
+ "directed_recordings": {
+  "median_raw": {
+   "real": 0.03825391705885073,
+   "cov": 0.032550485803197526,
+   "phase": 0.012209870145631463,
+   "shift": 0.023396347469269184
+  },
+  "p_real_vs": {
+   "cov": 0.005119445180753246,
+   "phase": 1.6007106751203537e-09,
+   "shift": 1.4551915228366852e-10
+  }
+ },
+ "directed_null_corrected": {
+  "Real data": {
+   "median_delta": 0.012839921849545927,
+   "share_omega_negative": 0.28296296296296297,
+   "p_vs_data": null,
+   "p_delta_vs_zero": 5.820766091346741e-11
+  },
+  "M1 linear": {
+   "median_delta": -0.0003707812568326148,
+   "share_omega_negative": 0.3991358024691358,
+   "p_vs_data": 1.9908382966410295e-11,
+   "p_delta_vs_zero": 0.4890561629727017
+  },
+  "M2 add.": {
+   "median_delta": 0.0031295165067862438,
+   "share_omega_negative": 0.26987654320987653,
+   "p_vs_data": 1.873267040294028e-09,
+   "p_delta_vs_zero": 0.00018572056433185935
+  },
+  "M2 diff.": {
+   "median_delta": 0.008253729023925072,
+   "share_omega_negative": 0.3603703703703704,
+   "p_vs_data": 0.0031130257080895754,
+   "p_delta_vs_zero": 2.0372681319713593e-10
+  },
+  "M3 add.": {
+   "median_delta": 0.0023460689885856185,
+   "share_omega_negative": 0.32185185185185183,
+   "p_vs_data": 1.3216483947108436e-09,
+   "p_delta_vs_zero": 0.0010565961129032075
+  },
+  "M3 diff.": {
+   "median_delta": 0.028167020068462133,
+   "share_omega_negative": 0.2365432098765432,
+   "p_vs_data": 2.8978384634487684e-07,
+   "p_delta_vs_zero": 2.9103830456733704e-11
+  },
+  "p_M2_add_vs_diff": 6.13132887959592e-06,
+  "p_M3_add_vs_diff": 3.0463409828898996e-13
+ },
+ "undirected_recordings": {
+  "median_raw": {
+   "real": 0.028468656247165658,
+   "cov": 0.020272265315310012,
+   "phase": 0.014851732885030167,
+   "shift": 0.02135719508486337
+  },
+  "p_real_vs": {
+   "cov": 0.003692160767968744,
+   "phase": 0.00011675505083985627,
+   "shift": 2.3269385565072298e-05
+  }
+ },
+ "undirected_null_corrected": {
+  "Real data": {
+   "median_delta": 0.005846914418676203,
+   "share_omega_negative": 0.33444444444444443,
+   "p_vs_data": null,
+   "p_delta_vs_zero": 0.0005845052655786276
+  },
+  "M1 linear": {
+   "median_delta": -0.00038175453185518553,
+   "share_omega_negative": 0.40703703703703703,
+   "p_vs_data": 0.006990040570117281,
+   "p_delta_vs_zero": 0.7036759513430297
+  },
+  "M2 add.": {
+   "median_delta": 0.0016754456102419102,
+   "share_omega_negative": 0.28296296296296297,
+   "p_vs_data": 0.0818548478395241,
+   "p_delta_vs_zero": 0.07175399383413605
+  },
+  "M2 diff.": {
+   "median_delta": 0.15802380548643225,
+   "share_omega_negative": 0.005555555555555556,
+   "p_vs_data": 3.0463409828898996e-13,
+   "p_delta_vs_zero": 2.9103830456733704e-11
+  },
+  "M3 add.": {
+   "median_delta": 0.0008808181793224352,
+   "share_omega_negative": 0.30037037037037034,
+   "p_vs_data": 0.02003654592433288,
+   "p_delta_vs_zero": 0.46011761703994125
+  },
+  "M3 diff.": {
+   "median_delta": 0.1975896934933037,
+   "share_omega_negative": 0.0014814814814814814,
+   "p_vs_data": 3.0463409828898996e-13,
+   "p_delta_vs_zero": 2.9103830456733704e-11
+  },
+  "p_M2_add_vs_diff": 3.0463409828898996e-13,
+  "p_M3_add_vs_diff": 3.0463409828898996e-13
+ }
+}

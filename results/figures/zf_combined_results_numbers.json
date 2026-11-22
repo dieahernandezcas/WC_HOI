@@ -1,0 +1,108 @@
+{
+ "directed_recordings": {
+  "median_raw": {
+   "real": 0.03825391705885073,
+   "cov": 0.032550485803197526,
+   "phase": 0.012209870145631463,
+   "shift": 0.023396347469269184
+  },
+  "p_real_vs": {
+   "cov": 0.005119445180753246,
+   "phase": 1.6007106751203537e-09,
+   "shift": 1.4551915228366852e-10
+  }
+ },
+ "directed_null_corrected": {
+  "Real data": {
+   "median_delta": 0.012839921849545927,
+   "share_omega_negative": 0.28296296296296297,
+   "p_vs_data": null,
+   "p_delta_vs_zero": 5.820766091346741e-11
+  },
+  "M1 linear": {
+   "median_delta": -0.0003707812568326148,
+   "share_omega_negative": 0.3991358024691358,
+   "p_vs_data": 1.9908382966410295e-11,
+   "p_delta_vs_zero": 0.4890561629727017
+  },
+  "M2 add.": {
+   "median_delta": 0.0005244376345167404,
+   "share_omega_negative": 0.3306172839506173,
+   "p_vs_data": 6.999324606471267e-10,
+   "p_delta_vs_zero": 0.5393326855264604
+  },
+  "M2 diff.": {
+   "median_delta": 0.002587610091757675,
+   "share_omega_negative": 0.3928395061728395,
+   "p_vs_data": 8.956130838061202e-09,
+   "p_delta_vs_zero": 0.007762141554849222
+  },
+  "M3 add.": {
+   "median_delta": 0.0016898681287759558,
+   "share_omega_negative": 0.352962962962963,
+   "p_vs_data": 6.517990907503646e-10,
+   "p_delta_vs_zero": 0.13898503431119025
+  },
+  "M3 diff.": {
+   "median_delta": 0.03855467206220823,
+   "share_omega_negative": 0.21925925925925926,
+   "p_vs_data": 3.6697499142893954e-10,
+   "p_delta_vs_zero": 2.9103830456733704e-11
+  },
+  "p_M2_add_vs_diff": 0.16086894811753782,
+  "p_M3_add_vs_diff": 3.0463409828898996e-13
+ },
+ "undirected_recordings": {
+  "median_raw": {
+   "real": 0.028468656247165658,
+   "cov": 0.020272265315310012,
+   "phase": 0.014851732885030167,
+   "shift": 0.02135719508486337
+  },
+  "p_real_vs": {
+   "cov": 0.003692160767968744,
+   "phase": 0.00011675505083985627,
+   "shift": 2.3269385565072298e-05
+  }
+ },
+ "undirected_null_corrected": {
+  "Real data": {
+   "median_delta": 0.005846914418676203,
+   "share_omega_negative": 0.33444444444444443,
+   "p_vs_data": null,
+   "p_delta_vs_zero": 0.0005845052655786276
+  },
+  "M1 linear": {
+   "median_delta": -0.00038175453185518553,
+   "share_omega_negative": 0.40703703703703703,
+   "p_vs_data": 0.006990040570117281,
+   "p_delta_vs_zero": 0.7036759513430297
+  },
+  "M2 add.": {
+   "median_delta": 0.0012718354212137122,
+   "share_omega_negative": 0.2762962962962963,
+   "p_vs_data": 0.031915592952332004,
+   "p_delta_vs_zero": 0.07434044909314252
+  },
+  "M2 diff.": {
+   "median_delta": 0.016531042019820953,
+   "share_omega_negative": 0.27296296296296296,
+   "p_vs_data": 2.123299129004197e-05,
+   "p_delta_vs_zero": 2.0372681319713593e-10
+  },
+  "M3 add.": {
+   "median_delta": 0.0034759134447767473,
+   "share_omega_negative": 0.27555555555555555,
+   "p_vs_data": 0.27217250939746407,
+   "p_delta_vs_zero": 0.01392684379243292
+  },
+  "M3 diff.": {
+   "median_delta": 0.003375684131173619,
+   "share_omega_negative": 0.35518518518518516,
+   "p_vs_data": 0.05204698069306695,
+   "p_delta_vs_zero": 0.010977849655319005
+  },
+  "p_M2_add_vs_diff": 2.646910562121858e-09,
+  "p_M3_add_vs_diff": 0.47451302943034157
+ }
+}

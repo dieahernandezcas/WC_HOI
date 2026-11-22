@@ -1,0 +1,55 @@
+{
+  "config": {
+    "name": "zebrafish_data",
+    "base_seed": 20261121,
+    "model": {
+      "c_ee": 16.0,
+      "c_ei": 12.0,
+      "c_ie": 15.0,
+      "c_ii": 3.0,
+      "tau_e": 2.5,
+      "tau_i": 3.75,
+      "beta": 0.1,
+      "gamma": 3.0,
+      "sigma": 0.015,
+      "drive_i": 0.0
+    },
+    "integration": {
+      "dt": 0.1,
+      "record_every": 20,
+      "n_burn_records": 300,
+      "n_records": 570
+    },
+    "information": {
+      "k_neighbours": 5
+    },
+    "preprocessing": {
+      "sampling_rate_hz": 1.0,
+      "highpass_cutoff_hz": 0.005,
+      "highpass_order": 2
+    },
+    "n_triplets": 300,
+    "triplet_seed": 20260911
+  },
+  "config_fingerprint": "be880ac24566",
+  "n_fish": 36,
+  "n_regions": 111,
+  "n_samples": 570,
+  "n_triplets": 300,
+  "n_symmetric_triplets": 75,
+  "median_of_fish_medians": {
+    "real": {
+      "directed_group": 0.03825391705885073,
+      "undirected_group": 0.028468656247165658
+    },
+    "covariance": {
+      "directed_group": 0.032550485803197526,
+      "undirected_group": 0.020272265315310012
+    },
+    "phase": {
+      "directed_group": 0.012209870145631463,
+      "undirected_group": 0.014851732885030167
+    }
+  },
+  "runtime_s": 49.7
+}

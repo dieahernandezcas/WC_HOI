@@ -1,0 +1,82 @@
+{
+  "name": "regime_exploration",
+  "base_seed": 20261121,
+  "model": {
+    "c_ee": 16.0,
+    "c_ei": 12.0,
+    "c_ie": 15.0,
+    "c_ii": 3.0,
+    "tau_e": 2.5,
+    "tau_i": 3.75,
+    "beta": 0.1,
+    "gamma": 3.0,
+    "sigma": 0.015,
+    "drive_i": 0.0
+  },
+  "integration": {
+    "dt": 0.1,
+    "record_every": 20,
+    "n_burn_records": 300,
+    "n_records": 570
+  },
+  "information": {
+    "k_neighbours": 5
+  },
+  "preprocessing": {
+    "sampling_rate_hz": 1.0,
+    "highpass_cutoff_hz": 0.005,
+    "highpass_order": 2
+  },
+  "drives": [
+    0.05,
+    0.1,
+    0.15,
+    0.2,
+    0.25,
+    0.3,
+    0.35,
+    0.4,
+    0.45
+  ],
+  "couplings": {
+    "pairwise": [
+      0,
+      1,
+      2,
+      4,
+      8,
+      16,
+      32
+    ],
+    "fan": [
+      0,
+      20,
+      40,
+      80,
+      160,
+      320,
+      640
+    ]
+  },
+  "n_replicates": 3,
+  "normalisations": [
+    "global",
+    "row"
+  ],
+  "forms": [
+    "additive",
+    "diffusive"
+  ],
+  "orders": [
+    "pairwise",
+    "fan"
+  ],
+  "networks": [
+    "three_node",
+    "ring",
+    "random",
+    "zebrafish_undirected"
+  ],
+  "n_zebrafish_triplets": 300,
+  "triplet_seed": 20260911
+}

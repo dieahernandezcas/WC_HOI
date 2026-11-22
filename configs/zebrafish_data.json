@@ -1,0 +1,8 @@
+{
+  "name": "zebrafish_data",
+  "base_seed": 20261121,
+  "n_triplets": 300,
+  "triplet_seed": 20260911,
+  "information": {"k_neighbours": 5},
+  "preprocessing": {"sampling_rate_hz": 1.0, "highpass_cutoff_hz": 0.005, "highpass_order": 2}
+}

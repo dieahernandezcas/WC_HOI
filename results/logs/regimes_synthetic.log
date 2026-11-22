@@ -1,0 +1,11 @@
+isolated node oscillates for drive in [0.03, 0.32]
+three_node__global__pairwise-additive.npz: 189 runs in 2s
+three_node__global__pairwise-diffusive.npz: 189 runs in 2s
+three_node__global__fan-additive.npz: 189 runs in 2s
+three_node__global__fan-diffusive.npz: 189 runs in 2s
+three_node__row__pairwise-additive.npz: 189 runs in 2s
+three_node__row__pairwise-diffusive.npz: 189 runs in 2s
+three_node__row__fan-additive.npz: 189 runs in 2s
+three_node__row__fan-diffusive.npz: 189 runs in 2s
+ring__global__pairwise-additive.npz: 189 runs in 17s
+ring__global__pairwise-diffusive.npz: 189 runs in 17s

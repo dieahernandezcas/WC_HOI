@@ -1,0 +1,140 @@
+{
+  "name": "main_experiment",
+  "base_seed": 20261121,
+  "model": {
+    "c_ee": 16.0,
+    "c_ei": 12.0,
+    "c_ie": 15.0,
+    "c_ii": 3.0,
+    "tau_e": 2.5,
+    "tau_i": 3.75,
+    "beta": 0.1,
+    "gamma": 3.0,
+    "sigma": 0.015,
+    "drive_i": 0.0
+  },
+  "integration": {
+    "dt": 0.1,
+    "record_every": 20,
+    "n_burn_records": 300,
+    "n_records": 570
+  },
+  "information": {
+    "k_neighbours": 5
+  },
+  "preprocessing": {
+    "sampling_rate_hz": 1.0,
+    "highpass_cutoff_hz": 0.005,
+    "highpass_order": 2
+  },
+  "fan_ratio": 20.0,
+  "synthetic_drive": {
+    "networks": [
+      "three_node",
+      "ring",
+      "random"
+    ],
+    "normalisations": [
+      "global",
+      "row"
+    ],
+    "orders": [
+      "pairwise",
+      "pairwise+fan"
+    ],
+    "forms": [
+      "additive",
+      "diffusive"
+    ],
+    "drive_range": [
+      0.0,
+      0.6,
+      16
+    ],
+    "coupling_range": [
+      0.0,
+      32.0,
+      16
+    ],
+    "n_replicates": 10
+  },
+  "synthetic_gain": {
+    "networks": [
+      "three_node",
+      "ring",
+      "random"
+    ],
+    "normalisations": [
+      "global"
+    ],
+    "orders": [
+      "pairwise",
+      "pairwise+fan"
+    ],
+    "forms": [
+      "additive",
+      "diffusive"
+    ],
+    "drive": 0.25,
+    "gain_range": [
+      0.5,
+      3.0,
+      16
+    ],
+    "coupling_range": [
+      0.0,
+      32.0,
+      16
+    ],
+    "n_replicates": 10
+  },
+  "zebrafish": {
+    "connectomes": [
+      "undirected",
+      "directed"
+    ],
+    "normalisations": [
+      "global",
+      "row"
+    ],
+    "orders": [
+      "pairwise",
+      "pairwise+fan"
+    ],
+    "forms": [
+      "additive",
+      "diffusive"
+    ],
+    "scan_drives": [
+      0.05,
+      0.1,
+      0.15,
+      0.2,
+      0.25,
+      0.3,
+      0.35,
+      0.4,
+      0.45
+    ],
+    "scan_couplings": [
+      0,
+      1,
+      2,
+      4,
+      8,
+      16,
+      32,
+      64
+    ],
+    "scan_replicates": 3,
+    "selection_metric": "fc_similarity",
+    "final_replicates": 36,
+    "n_triplets": 300,
+    "triplet_seed": 20260911,
+    "linear_model": {
+      "lam": 0.85,
+      "sigma": 0.2,
+      "n_burn": 500
+    }
+  }
+}
